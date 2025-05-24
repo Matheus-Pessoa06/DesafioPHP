@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chamado;
 use Illuminate\Http\Request;
+use App\Http\Requests\ChamadoRequest;
 use Inertia\Inertia;
 
 class ChamadoController extends Controller
@@ -20,15 +21,9 @@ class ChamadoController extends Controller
         return Inertia::render('Chamados/Create');
     }
 
-    public function store(Request $request)
+    public function store(ChamadoRequest $request)
     {
-        $data = $request->validate([
-            'titulo' => 'required|string|max:255',
-            'descricao' => 'required',
-            'categoria' => 'required|string',
-            'prioridade' => 'required|in:Baixa,Média,Alta',
-            'anexo' => 'nullable|file|max:2048',
-        ]);
+        $data = $request->validate();
 
         if ($request->hasFile('anexo')) {
             $data['anexo'] = $request->file('anexo')->store('anexos', 'public');

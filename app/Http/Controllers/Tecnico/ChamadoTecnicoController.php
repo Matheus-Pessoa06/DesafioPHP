@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Tecnico;
 use App\Http\Controllers\Controller;
 use App\Models\Chamado;
 use Illuminate\Http\Request;
+use App\Http\Requests\ChamadoTecnicoRequest;
 use Inertia\Inertia;
 
 class ChamadoTecnicoController extends Controller
@@ -31,11 +32,9 @@ class ChamadoTecnicoController extends Controller
         return Inertia::render('Tecnico/Chamados/Show', compact('chamado'));
     }
 
-    public function responder(Request $request, Chamado $chamado)
+    public function responder(ChamadoTecnicoRequest $request, Chamado $chamado)
     {
-        $request->validate([
-            'mensagem' => 'required|string',
-        ]);
+        $request->validate();
 
         $chamado->respostas()->create([
             'user_id' => auth()->id(),
@@ -45,11 +44,9 @@ class ChamadoTecnicoController extends Controller
         return back()->with('success', 'Resposta enviada.');
     }
 
-    public function alterarStatus(Request $request, Chamado $chamado)
+    public function alterarStatus(ChamadoTecnicoRequest $request, Chamado $chamado)
     {
-        $request->validate([
-            'status' => 'required|in:Aberto,Em atendimento,Resolvido,Fechado',
-        ]);
+        $request->validate();
 
         $chamado->update([
             'status' => $request->status,
