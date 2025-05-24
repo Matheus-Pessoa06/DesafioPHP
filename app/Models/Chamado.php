@@ -13,8 +13,9 @@ class Chamado extends Model
         'descricao',
         'categoria',   
         'prioridade',   
-        'status',     
+        'status',  
         'anexo',        
+        'responsavel',   
     ];
 
     public function respostas() {

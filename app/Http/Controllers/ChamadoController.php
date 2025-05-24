@@ -41,7 +41,18 @@ class ChamadoController extends Controller
 
     public function show(Chamado $chamado)
     {
-        return Inertia::render('Chamados/Show', compact('chamado'));
+        return Inertia::render('Chamados/Show', [
+            'chamado' => [
+                'id' => $chamado->id,
+                'titulo' => $chamado->titulo,
+                'descricao' => $chamado->descricao,
+                'categoria' => $chamado->categoria,
+                'status' => $chamado->status,
+                'responsavel' => $chamado->responsavel,
+                'created_at' => $chamado->created_at->format('d-m-Y H:i:s'),
+                'updated_at' => $chamado->updated_at->format('d-m-Y H:i:s'),
+            ]
+        ]);
     }
 }
 

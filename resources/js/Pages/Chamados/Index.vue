@@ -23,7 +23,13 @@
             <p class="text-sm text-gray-500">Categoria: {{ chamado.categoria }} | Prioridade: {{ chamado.prioridade }}</p>
             <p class="text-sm font-medium mt-1">Status: <span class="text-blue-600">{{ chamado.status }}</span></p>
           </div>
-          <Link :href="`/chamados/${chamado.id}`" class="text-sm text-blue-600 hover:underline">Visualizar</Link>
+          <!-- <Link :href="`/chamados/${chamado.id}`" class="text-sm text-blue-600 hover:underline">Visualizar</Link> -->
+          <Link
+            :href="`/chamados/${chamado.id}`"
+            class="text-sm bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-1 rounded font-medium transition"
+          >
+            Visualizar
+          </Link>
         </div>
       </div>
     </div>
