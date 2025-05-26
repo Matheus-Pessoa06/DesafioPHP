@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\ChamadoController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\Tecnico\ChamadoTecnicoController;
 
 Route::get('/', function () {
@@ -57,4 +58,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('chamados/{chamado}/resposta', [ChamadoTecnicoController::class, 'responder'])->name('chamados.responder');
         Route::patch('chamados/{chamado}/status', [ChamadoTecnicoController::class, 'alterarStatus'])->name('chamados.status');
     });
+
+
+    /**
+     * Rotas do TÉCNICO
+     */
+    Route::resource('categorias', CategoriaController::class);
 });

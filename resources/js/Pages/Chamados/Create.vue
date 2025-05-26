@@ -25,10 +25,12 @@
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
           <select v-model="form.categoria" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option>TI</option>
-            <option>Manutenção</option>
-            <option>Suporte RH</option>
+            <option disabled value="">Selecione uma categoria</option>
+            <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.nome">
+              {{ categoria.nome }}
+            </option>
           </select>
+
           <p v-if="form.errors.categoria" class="text-red-500 text-sm mt-1">{{ form.errors.categoria }}</p>
         </div>
 
@@ -61,11 +63,13 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3'
 
+const { categorias } = defineProps(['categorias'])
+
 const form = useForm({
   titulo: '',
   descricao: '',
   responsavel: '',
-  categoria: 'TI',
+  categoria: '',
   prioridade: 'Média',
   anexo: null,
 })

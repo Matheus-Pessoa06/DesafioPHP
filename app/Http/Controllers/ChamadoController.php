@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Chamado;
 use Illuminate\Http\Request;
 use App\Http\Requests\ChamadoRequest;
+use App\Models\Categoria;
 use Inertia\Inertia;
 
 class ChamadoController extends Controller
@@ -18,7 +19,9 @@ class ChamadoController extends Controller
 
     public function create()
     {
-        return Inertia::render('Chamados/Create');
+        return Inertia::render('Chamados/Create', [
+            'categorias' => Categoria::orderBy('nome')->get(),
+        ]);
     }
 
     public function store(ChamadoRequest $request)
