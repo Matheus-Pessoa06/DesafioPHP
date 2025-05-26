@@ -5,12 +5,20 @@
     <form @submit.prevent="submit" class="space-y-5">
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Título</label>
-        <input v-model="form.titulo" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+        <input v-model="form.titulo" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <p v-if="form.errors.titulo" class="text-red-500 text-sm mt-1">{{ form.errors.titulo }}</p>
       </div>
 
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
-        <textarea v-model="form.descricao" rows="4" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required />
+        <textarea v-model="form.descricao" rows="4" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <p v-if="form.errors.descricao" class="text-red-500 text-sm mt-1">{{ form.errors.descricao }}</p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Responsavel</label>
+        <input v-model="form.responsavel" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        <p v-if="form.errors.responsavel" class="text-red-500 text-sm mt-1">{{ form.errors.responsavel }}</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -21,6 +29,7 @@
             <option>Manutenção</option>
             <option>Suporte RH</option>
           </select>
+          <p v-if="form.errors.categoria" class="text-red-500 text-sm mt-1">{{ form.errors.categoria }}</p>
         </div>
 
         <div>
@@ -30,12 +39,14 @@
             <option>Média</option>
             <option>Alta</option>
           </select>
+          <p v-if="form.errors.prioridade" class="text-red-500 text-sm mt-1">{{ form.errors.prioridade }}</p>
         </div>
       </div>
 
       <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">Anexo (opcional)</label>
         <input type="file" @change="handleFile" class="w-full border rounded px-3 py-2" />
+        <p v-if="form.errors.anexo" class="text-red-500 text-sm mt-1">{{ form.errors.anexo }}</p>
       </div>
 
       <div class="flex justify-end">
@@ -53,6 +64,7 @@ import { useForm } from '@inertiajs/vue3'
 const form = useForm({
   titulo: '',
   descricao: '',
+  responsavel: '',
   categoria: 'TI',
   prioridade: 'Média',
   anexo: null,

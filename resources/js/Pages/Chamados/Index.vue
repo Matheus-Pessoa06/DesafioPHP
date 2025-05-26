@@ -7,6 +7,10 @@
       </Link>
     </div>
 
+    <div v-if="showMessage" class="mb-4 p-4 bg-green-100 text-green-700 rounded shadow">
+      {{ showMessage }}
+    </div>
+
     <div v-if="chamados.length === 0" class="text-gray-500 text-center py-10">
       Nenhum chamado encontrado.
     </div>
@@ -23,7 +27,6 @@
             <p class="text-sm text-gray-500">Categoria: {{ chamado.categoria }} | Prioridade: {{ chamado.prioridade }}</p>
             <p class="text-sm font-medium mt-1">Status: <span class="text-blue-600">{{ chamado.status }}</span></p>
           </div>
-          <!-- <Link :href="`/chamados/${chamado.id}`" class="text-sm text-blue-600 hover:underline">Visualizar</Link> -->
           <Link
             :href="`/chamados/${chamado.id}`"
             class="text-sm bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-1 rounded font-medium transition"
@@ -37,6 +40,19 @@
 </template>
 
 <script setup>
-import { Link } from '@inertiajs/vue3'
+import { ref, onMounted } from 'vue'
+import { Link, usePage } from '@inertiajs/vue3'
+
+const page = usePage()
+const showMessage = ref(page.props.flash.success)
+
+onMounted(() => {
+  if (showMessage.value) {
+    setTimeout(() => {
+      showMessage.value = false
+    }, 3000)
+  }
+})
+
 defineProps({ chamados: Array })
 </script>

@@ -23,7 +23,7 @@ class ChamadoController extends Controller
 
     public function store(ChamadoRequest $request)
     {
-        $data = $request->validate();
+        $data = $request->validated();
 
         if ($request->hasFile('anexo')) {
             $data['anexo'] = $request->file('anexo')->store('anexos', 'public');

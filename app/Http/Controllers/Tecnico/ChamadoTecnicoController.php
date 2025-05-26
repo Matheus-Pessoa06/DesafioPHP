@@ -34,7 +34,7 @@ class ChamadoTecnicoController extends Controller
 
     public function responder(ChamadoTecnicoRequest $request, Chamado $chamado)
     {
-        $request->validate();
+        $request->validated();
 
         $chamado->respostas()->create([
             'user_id' => auth()->id(),
