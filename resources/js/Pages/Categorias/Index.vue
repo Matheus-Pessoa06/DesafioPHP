@@ -33,8 +33,15 @@
 <script setup>
 import { router } from '@inertiajs/vue3'
 import { Link } from '@inertiajs/vue3'
+import AppLayout from '@/Layouts/AppLayout.vue'
 
-defineProps({ categorias: Array })
+defineOptions({
+  layout: AppLayout,
+})
+
+defineProps({ 
+  categorias: Array,   
+})
 
 function deletar(id) {
   if (confirm('Tem certeza que deseja excluir esta categoria?')) {

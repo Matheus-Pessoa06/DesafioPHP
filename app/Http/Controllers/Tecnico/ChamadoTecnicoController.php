@@ -24,7 +24,10 @@ class ChamadoTecnicoController extends Controller
 
         $chamados = $query->latest()->get();
 
-        return Inertia::render('Tecnico/Chamados/Index', compact('chamados'));
+        return Inertia::render('Tecnico/Chamados', [
+            'chamados' => $chamados,
+            'filters' => $request->only(['status', 'prioridade']), // Opcional, para manter selecionado no front
+        ]);
     }
 
     public function show(Chamado $chamado)

@@ -35,6 +35,11 @@
 
 <script setup>
 import { useForm, Link } from '@inertiajs/vue3'
+import AppLayout from '@/Layouts/AppLayout.vue'
+
+defineOptions({
+  layout: AppLayout,
+})
 
 const form = useForm({ nome: '' })
 
