@@ -63,5 +63,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /**
      * Rotas do TÉCNICO
      */
-    Route::resource('categorias', CategoriaController::class);
+    Route::resource('categorias', CategoriaController::class)->except(['show']);;
 });

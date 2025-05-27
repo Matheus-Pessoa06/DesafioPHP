@@ -2,6 +2,10 @@
   <div class="max-w-xl mx-auto p-6">
     <h1 class="text-xl font-bold mb-4">Editar Categoria</h1>
 
+    <Link href="/chamados/create" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
+        Novo Chamado
+    </Link>
+
     <form @submit.prevent="submit" class="space-y-4">
       <div>
         <label class="block mb-1 font-medium">Nome</label>

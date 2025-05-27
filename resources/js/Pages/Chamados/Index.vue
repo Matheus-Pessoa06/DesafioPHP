@@ -5,6 +5,10 @@
       <Link href="/chamados/create" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
         Novo Chamado
       </Link>
+      
+      <Link href="/categorias/create" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
+        Nova Categoria
+      </Link>
     </div>
 
     <div v-if="showMessage" class="mb-4 p-4 bg-green-100 text-green-700 rounded shadow">
