@@ -4,19 +4,23 @@
       <h1 class="text-2xl font-bold text-gray-800">Meus Chamados</h1>
 
       <div class="flex gap-3 items-center">
-        <Link href="/chamados/create" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
-          Novo Chamado
+        <Link href="/chamados/create">
+          <PrimaryButton>
+            Novo Chamado
+          </PrimaryButton>
         </Link>
 
-        <Link href="/categorias/create" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
-          Nova Categoria
+        <Link href="/categorias/create">
+          <PrimaryButton>
+            Nova Categoria
+          </PrimaryButton>
         </Link>
       </div>
     </div>
 
-    <div v-if="showMessage" class="mb-4 p-4 bg-green-100 text-green-700 rounded shadow">
+    <ActionMessage :on="!!showMessage" class="mb-4">
       {{ showMessage }}
-    </div>
+    </ActionMessage>
 
     <div v-if="chamados.length === 0" class="text-gray-500 text-center py-10">
       Nenhum chamado encontrado.
@@ -40,7 +44,7 @@
           </div>
           <Link
             :href="`/chamados/${chamado.id}`"
-            class="text-sm bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-1 rounded font-medium transition"
+            class="inline-flex items-center px-3 py-1 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
           >
             Visualizar
           </Link>
@@ -54,6 +58,9 @@
 import { ref, onMounted } from 'vue'
 import { Link, usePage, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import ActionMessage from '@/Components/ActionMessage.vue';
+// import SecondaryButton from '@/Components/SecondaryButton.vue'; // Se for usar as classes diretamente
 
 defineOptions({
   layout: AppLayout,
@@ -67,8 +74,8 @@ const showMessage = ref(page.props.flash.success)
 onMounted(() => {
   if (showMessage.value) {
     setTimeout(() => {
-      showMessage.value = false
-    }, 3000)
+      showMessage.value = false;
+    }, 3000);
   }
 })
 </script>

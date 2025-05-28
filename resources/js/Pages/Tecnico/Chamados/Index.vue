@@ -4,12 +4,13 @@
       <h1 class="text-2xl font-bold text-gray-800">Chamados Técnicos</h1>
         <Link
           href="/tecnico/usuarios"
-          class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
         >
-          Controle de Usuários
+          <PrimaryButton>
+            Controle de Usuários
+          </PrimaryButton>
         </Link>
       <div class="flex gap-4">
-        <select v-model="filters.status" @change="applyFilters" class="border px-3 py-2 rounded">
+        <select v-model="filters.status" @change="applyFilters" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm px-3 py-2">
           <option value="">Todos os Status</option>
           <option>Aberto</option>
           <option>Em atendimento</option>
@@ -17,7 +18,7 @@
           <option>Fechado</option>
         </select>
 
-        <select v-model="filters.prioridade" @change="applyFilters" class="border px-3 py-2 rounded">
+        <select v-model="filters.prioridade" @change="applyFilters" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm px-3 py-2">
           <option value="">Todas as Prioridades</option>
           <option>Baixa</option>
           <option>Média</option>
@@ -44,7 +45,12 @@
             </p>
             <p class="text-sm font-medium mt-1">Status: <span class="text-blue-600">{{ chamado.status }}</span></p>
           </div>
-          <Link :href="`/tecnico/chamados/${chamado.id}`" class="text-sm text-blue-600 hover:underline">Ver Detalhes</Link>
+          <Link
+            :href="`/tecnico/chamados/${chamado.id}`"
+            class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
+          >
+            Ver Detalhes
+          </Link>
         </div>
       </div>
     </div>
@@ -55,12 +61,13 @@
 import { router, Link } from '@inertiajs/vue3'
 import { ref } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue'
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 defineOptions({
   layout: AppLayout,
 })
 
-const props = defineProps({ 
+const props = defineProps({
   chamados: Array,
   filters: Object,
 })
@@ -77,4 +84,3 @@ function applyFilters() {
  }, { preserveState: true })
 }
 </script>
-

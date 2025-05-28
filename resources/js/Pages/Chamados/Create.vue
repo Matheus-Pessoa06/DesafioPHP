@@ -4,57 +4,78 @@
 
     <form @submit.prevent="submit" class="space-y-5">
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Título</label>
-        <input v-model="form.titulo" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        <p v-if="form.errors.titulo" class="text-red-500 text-sm mt-1">{{ form.errors.titulo }}</p>
+        <InputLabel for="titulo" value="Título" />
+        <TextInput id="titulo" v-model="form.titulo" type="text" class="mt-1 block w-full" />
+        <InputError :message="form.errors.titulo" class="mt-2" />
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Descrição</label>
-        <textarea v-model="form.descricao" rows="4" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        <p v-if="form.errors.descricao" class="text-red-500 text-sm mt-1">{{ form.errors.descricao }}</p>
+        <InputLabel for="descricao" value="Descrição" />
+        <textarea
+          id="descricao"
+          v-model="form.descricao"
+          rows="4"
+          class="w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1"
+        />
+        <InputError :message="form.errors.descricao" class="mt-2" />
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Responsavel</label>
-        <input v-model="form.responsavel" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        <p v-if="form.errors.responsavel" class="text-red-500 text-sm mt-1">{{ form.errors.responsavel }}</p>
+        <InputLabel for="responsavel" value="Responsavel" />
+        <TextInput id="responsavel" v-model="form.responsavel" type="text" class="mt-1 block w-full" />
+        <InputError :message="form.errors.responsavel" class="mt-2" />
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
-          <select v-model="form.categoria" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <InputLabel for="categoria" value="Categoria" />
+          <select
+            id="categoria"
+            v-model="form.categoria"
+            class="w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1"
+          >
             <option disabled value="">Selecione uma categoria</option>
             <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.nome">
               {{ categoria.nome }}
             </option>
           </select>
-
-          <p v-if="form.errors.categoria" class="text-red-500 text-sm mt-1">{{ form.errors.categoria }}</p>
+          <InputError :message="form.errors.categoria" class="mt-2" />
         </div>
 
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Prioridade</label>
-          <select v-model="form.prioridade" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <InputLabel for="prioridade" value="Prioridade" />
+          <select
+            id="prioridade"
+            v-model="form.prioridade"
+            class="w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1"
+          >
             <option>Baixa</option>
             <option>Média</option>
             <option>Alta</option>
           </select>
-          <p v-if="form.errors.prioridade" class="text-red-500 text-sm mt-1">{{ form.errors.prioridade }}</p>
+          <InputError :message="form.errors.prioridade" class="mt-2" />
         </div>
       </div>
 
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Anexo (opcional)</label>
-        <input type="file" @change="handleFile" class="w-full border rounded px-3 py-2" />
-        <p v-if="form.errors.anexo" class="text-red-500 text-sm mt-1">{{ form.errors.anexo }}</p>
+        <InputLabel for="anexo" value="Anexo (opcional)" />
+        <input
+          id="anexo"
+          type="file"
+          @change="handleFile"
+          class="w-full border rounded px-3 py-2 mt-1"
+        />
+        <InputError :message="form.errors.anexo" class="mt-2" />
       </div>
 
-      <div class="flex justify-end">
-        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded shadow">
+      <div class="flex items-center justify-end">
+        <ActionMessage :on="form.recentlySuccessful" class="me-3">
+          Chamado Salvo!
+        </ActionMessage>
+
+        <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
           Salvar Chamado
-        </button>
+        </PrimaryButton>
       </div>
     </form>
   </div>
@@ -63,6 +84,11 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import InputLabel from '@/Components/InputLabel.vue';
+import TextInput from '@/Components/TextInput.vue';
+import InputError from '@/Components/InputError.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import ActionMessage from '@/Components/ActionMessage.vue'; // Ajuste o caminho
 
 defineOptions({
   layout: AppLayout,
@@ -86,6 +112,8 @@ function handleFile(e) {
 function submit() {
   form.post('/chamados', {
     forceFormData: true,
+    preserveScroll: true,
+    onSuccess: () => form.reset('anexo'), // Reseta todos os campos, exceto o anexo, se necessário. Ou apenas form.reset()
   })
 }
 </script>

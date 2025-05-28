@@ -4,7 +4,7 @@
       <h1 class="text-xl font-bold">Nova Categoria</h1>
       <Link
         href="/chamados"
-        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow"
+        class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 transition ease-in-out duration-150"
       >
         Chamados
       </Link>
@@ -12,23 +12,14 @@
 
     <form @submit.prevent="submit" class="space-y-4">
       <div>
-        <label class="block mb-1 font-medium">Nome</label>
-        <input
-          v-model="form.nome"
-          type="text"
-          class="w-full border border-gray-300 p-2 rounded"
-        />
-        <div v-if="form.errors.nome" class="text-red-600 text-sm mt-1">
-          {{ form.errors.nome }}
-        </div>
+        <InputLabel for="nome" value="Nome" />
+        <TextInput id="nome" v-model="form.nome" type="text" class="mt-1 block w-full" />
+        <InputError :message="form.errors.nome" class="mt-2" />
       </div>
 
-      <button
-        :disabled="form.processing"
-        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow disabled:opacity-50"
-      >
+      <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
         Salvar
-      </button>
+      </PrimaryButton>
     </form>
   </div>
 </template>
@@ -36,6 +27,10 @@
 <script setup>
 import { useForm, Link } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import InputLabel from '@/Components/InputLabel.vue';
+import TextInput from '@/Components/TextInput.vue';
+import InputError from '@/Components/InputError.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 defineOptions({
   layout: AppLayout,

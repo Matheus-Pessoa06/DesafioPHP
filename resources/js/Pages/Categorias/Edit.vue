@@ -8,8 +8,8 @@
 
     <form @submit.prevent="submit" class="space-y-4">
       <div>
-        <label class="block mb-1 font-medium">Nome</label>
-        <input v-model="form.nome" type="text" class="w-full border p-2 rounded" />
+        <InputLabel for="nome" value="Nome" />
+        <TextInput id="nome" v-model="form.nome" type="text" class="mt-1 block w-full" />
         <div v-if="form.errors.nome" class="text-red-600 text-sm mt-1">{{ form.errors.nome }}</div>
       </div>
 
@@ -23,6 +23,8 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import InputLabel from '@/Components/InputLabel.vue'; 
+import TextInput from '@/Components/TextInput.vue';
 
 defineOptions({
   layout: AppLayout,
