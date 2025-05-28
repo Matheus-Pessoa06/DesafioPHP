@@ -57,5 +57,23 @@ class ChamadoTecnicoController extends Controller
 
         return back()->with('success', 'Status atualizado.');
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|string|in:Aberto,Em atendimento,Resolvido,Fechado',
+        ]);
+
+        $chamado = Chamado::findOrFail($id);
+
+        if(auth()->user()->role !== 'tecnico'){
+            return response()->json(['error' => 'Não autorizado'], 403);
+        }
+
+        $chamado->status = $request->status;
+        $chamado->save();
+
+        return response()->json(['message' => 'Status atualizado com sucesso']);
+    }
 }
 

@@ -59,6 +59,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('chamados/{chamado}', [ChamadoTecnicoController::class, 'show'])->name('chamados.show');
         Route::post('chamados/{chamado}/resposta', [ChamadoTecnicoController::class, 'responder'])->name('chamados.responder');
         Route::patch('chamados/{chamado}/status', [ChamadoTecnicoController::class, 'alterarStatus'])->name('chamados.status');
+       
+        Route::patch('/chamados/{id}/status', [ChamadoController::class, 'updateStatus']);
+
 
         Route::get('usuarios', [UserController::class, 'index'])->name('usuarios.index');
         Route::patch('usuarios/{user}/toggle-active', [UserController::class, 'toggleActive'])->name('usuarios.toggleActive');
@@ -73,6 +76,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
      */
     Route::get('/export/excel', [ExportController::class, 'exportExcel'])->name('export.excel');
     Route::get('/export/pdf', [ExportController::class, 'exportPdf'])->name('export.pdf');
+
+
 
     
 });
