@@ -7,6 +7,7 @@ use App\Http\Controllers\ChamadoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\Tecnico\ChamadoTecnicoController;
 use App\Http\Controllers\Tecnico\UserController;
+use App\Http\Controllers\ExportController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -64,6 +65,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('usuarios/{user}/change-role', [UserController::class, 'changeRole'])->name('usuarios.changeRole');
     });
 
-    Route::resource('categorias', CategoriaController::class)->except(['show']);;
+    Route::resource('categorias', CategoriaController::class)->except(['show']);
+
+    
+    /**
+     * Rotas PDF/Excel
+     */
+    Route::get('/export/excel', [ExportController::class, 'exportExcel'])->name('export.excel');
+    Route::get('/export/pdf', [ExportController::class, 'exportPdf'])->name('export.pdf');
+
     
 });
