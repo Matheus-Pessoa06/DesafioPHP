@@ -14,19 +14,19 @@ class ChamadoTecnicoController extends Controller
     {
         $query = Chamado::query();
 
-        if ($request->has('status')) {
+        if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
-        if ($request->has('prioridade')) {
+        if ($request->filled('prioridade')) {
             $query->where('prioridade', $request->prioridade);
         }
 
         $chamados = $query->latest()->get();
 
-        return Inertia::render('Tecnico/Chamados', [
+        return Inertia::render('Tecnico/Chamados/Index', [
             'chamados' => $chamados,
-            'filters' => $request->only(['status', 'prioridade']), // Opcional, para manter selecionado no front
+            'filters' => $request->only(['status', 'prioridade']),
         ]);
     }
 
@@ -49,7 +49,7 @@ class ChamadoTecnicoController extends Controller
 
     public function alterarStatus(ChamadoTecnicoRequest $request, Chamado $chamado)
     {
-        $request->validate();
+        $request->validated();
 
         $chamado->update([
             'status' => $request->status,

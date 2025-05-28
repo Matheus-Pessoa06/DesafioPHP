@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\ChamadoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\Tecnico\ChamadoTecnicoController;
+use App\Http\Controllers\Tecnico\UserController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -57,11 +58,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('chamados/{chamado}', [ChamadoTecnicoController::class, 'show'])->name('chamados.show');
         Route::post('chamados/{chamado}/resposta', [ChamadoTecnicoController::class, 'responder'])->name('chamados.responder');
         Route::patch('chamados/{chamado}/status', [ChamadoTecnicoController::class, 'alterarStatus'])->name('chamados.status');
+
+        Route::get('usuarios', [UserController::class, 'index'])->name('usuarios.index');
+        Route::patch('usuarios/{user}/toggle-active', [UserController::class, 'toggleActive'])->name('usuarios.toggleActive');
+        Route::patch('usuarios/{user}/change-role', [UserController::class, 'changeRole'])->name('usuarios.changeRole');
     });
 
-
-    /**
-     * Rotas do TÉCNICO
-     */
     Route::resource('categorias', CategoriaController::class)->except(['show']);;
+    
 });

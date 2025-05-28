@@ -2,6 +2,12 @@
   <div class="max-w-6xl mx-auto p-6">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
       <h1 class="text-2xl font-bold text-gray-800">Chamados Técnicos</h1>
+        <Link
+          href="/tecnico/usuarios"
+          class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+        >
+          Controle de Usuários
+        </Link>
       <div class="flex gap-4">
         <select v-model="filters.status" @change="applyFilters" class="border px-3 py-2 rounded">
           <option value="">Todos os Status</option>
@@ -50,27 +56,25 @@ import { router, Link } from '@inertiajs/vue3'
 import { ref } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue'
 
-
 defineOptions({
   layout: AppLayout,
+})
+
+const props = defineProps({ 
+  chamados: Array,
   filters: Object,
 })
 
-defineProps({ chamados: Array })
-
 const filters = ref({
-  status: '',
-  prioridade: '',
+  status: props.filters?.status ?? '',
+  prioridade: props.filters?.prioridade ?? '',
 })
 
 function applyFilters() {
-  router.get('/tecnico/chamados', {
-    status: filters.value.status,
-    prioridade: filters.value.prioridade,
-  }, {
-    preserveState: true,
-    preserveScroll: true,
-  })
+ router.get('/tecnico/chamados', {
+  status: filters.value.status,
+  prioridade: filters.value.prioridade,
+ }, { preserveState: true })
 }
-
 </script>
+
