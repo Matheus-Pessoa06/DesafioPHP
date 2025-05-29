@@ -1,4 +1,4 @@
-# 📦 Desafio Engeselt Softwares - Desenvolvedor Web PHP JR
+# 📦 Desafio Desenvolvedor Web
 
 Este projeto utiliza o framework Laravel. Abaixo estão os passos completos para rodar o ambiente local, indicamos o uso do laradock onde abaixo deixaremos um link de exemplificação de uso, porém pode ser feito uso do laravel sail, docker... O importante é que o projeto seja executado e consiga ser feito as devidas tratativas.
 
@@ -90,6 +90,10 @@ docker compose up -d postgres nginx
 * Gere a APP Key do Laravel:
     ```
     php artisan key:generate
+    ```
+* Instale a dependencia de exportação do pdf e excell:
+    ```
+    composer require barryvdh/laravel-dompdf
     ```
 * Instale as dependências do front-end:
     ```
