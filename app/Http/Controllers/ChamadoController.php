@@ -10,12 +10,36 @@ use Inertia\Inertia;
 
 class ChamadoController extends Controller
 {
-    public function index()
-    {
-        $chamados = auth()->user()->chamados()->latest()->get();
+    public function index(Request $request)
+{
+    // Pegue os filtros da request
+    $status = $request->input('status');
+    $prioridade = $request->input('prioridade');
 
-        return Inertia::render('Chamados/Index', compact('chamados'));
+    // Busque os chamados do usuário autenticado
+    $query = auth()->user()->chamados()->latest();
+
+    // Aplique os filtros se estiverem presentes
+    if ($status) {
+        $query->where('status', $status);
     }
+
+    if ($prioridade) {
+        $query->where('prioridade', $prioridade);
+    }
+
+    // Obtenha os chamados filtrados
+    $chamados = $query->get();
+
+    // Retorne para a view com os filtros aplicados
+    return Inertia::render('Chamados/Index', [
+        'chamados' => $chamados,
+        'filters' => [
+            'status' => $status,
+            'prioridade' => $prioridade,
+        ],
+    ]);
+}
 
     public function create()
     {

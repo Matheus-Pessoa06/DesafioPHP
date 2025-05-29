@@ -1,16 +1,45 @@
 <template>
   <div class="max-w-5xl mx-auto p-6">
-    <div class="flex justify-between items-center mb-6">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
       <h1 class="text-2xl font-bold text-gray-800">Meus Chamados</h1>
 
       <div class="flex gap-3 items-center">
-        <Link href="/chamados/create" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
-          Novo Chamado
+        <Link href="/chamados/create">
+          <PrimaryButton>
+            Novo Chamado
+          </PrimaryButton>
         </Link>
 
-        <Link href="/categorias/create" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
-          Nova Categoria
+        <Link href="/categorias/create">
+          <PrimaryButton>
+            Nova Categoria
+          </PrimaryButton>
         </Link>
+      </div>
+
+      <div class="flex gap-4">
+        <select
+          v-model="filters.status"
+          @change="applyFilters"
+          class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm px-3 py-2"
+        >
+          <option value="">Todos os Status</option>
+          <option>Aberto</option>
+          <option>Em atendimento</option>
+          <option>Resolvido</option>
+          <option>Fechado</option>
+        </select>
+
+        <select
+          v-model="filters.prioridade"
+          @change="applyFilters"
+          class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm px-3 py-2"
+        >
+          <option value="">Todas as Prioridades</option>
+          <option>Baixa</option>
+          <option>Média</option>
+          <option>Alta</option>
+        </select>
       </div>
     </div>
 
@@ -19,10 +48,13 @@
     </div>
 
     <div v-if="chamados.length === 0" class="text-gray-500 text-center py-10">
-      Nenhum chamado encontrado.
+      Nenhum chamado encontrado com os filtros aplicados.
     </div>
 
-    <div v-else class="grid gap-4">
+    <div
+      v-else
+      class="grid gap-4"
+    >
       <div
         v-for="chamado in chamados"
         :key="chamado.id"
@@ -54,15 +86,35 @@
 import { ref, onMounted } from 'vue'
 import { Link, usePage, router } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import PrimaryButton from '@/Components/PrimaryButton.vue'
 
 defineOptions({
   layout: AppLayout,
 })
 
-defineProps({ chamados: Array })
+const props = defineProps({
+  chamados: Array,
+  filters: Object,
+})
 
 const page = usePage()
 const showMessage = ref(page.props.flash.success)
+
+const filters = ref({
+  status: props.filters?.status ?? '',
+  prioridade: props.filters?.prioridade ?? '',
+})
+
+function applyFilters() {
+  router.get(
+    '/chamados',
+    {
+      status: filters.value.status,
+      prioridade: filters.value.prioridade,
+    },
+    { preserveState: true }
+  )
+}
 
 onMounted(() => {
   if (showMessage.value) {

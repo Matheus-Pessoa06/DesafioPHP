@@ -12,7 +12,7 @@ class ChamadoTecnicoController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Chamado::query();
+        $query = auth()->user()->chamados();
 
         if ($request->filled('status')) {
             $query->where('status', $request->status);
@@ -24,7 +24,7 @@ class ChamadoTecnicoController extends Controller
 
         $chamados = $query->latest()->get();
 
-        return Inertia::render('Tecnico/Chamados/Index', [
+        return Inertia::render('Chamados/Index', [
             'chamados' => $chamados,
             'filters' => $request->only(['status', 'prioridade']),
         ]);

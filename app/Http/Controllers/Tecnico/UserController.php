@@ -9,7 +9,6 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    // Lista os usuários
     public function index()
     {
         $users = User::orderBy('name')->get();
@@ -19,7 +18,6 @@ class UserController extends Controller
         ]);
     }
 
-    // Ativa/desativa usuário
     public function toggleActive(User $user)
     {
         $user->active = !$user->active;
@@ -28,7 +26,6 @@ class UserController extends Controller
         return back()->with('success', 'Status do usuário atualizado.');
     }
 
-    // Altera perfil do usuário entre colaborador e técnico
     public function changeRole(Request $request, User $user)
     {
         $request->validate([

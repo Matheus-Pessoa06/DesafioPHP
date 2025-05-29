@@ -8,7 +8,6 @@
       </Link>
 
       <div class="flex gap-4">
-        <!-- Filtro Status -->
         <select
           v-model="filters.status"
           @change="applyFilters"
