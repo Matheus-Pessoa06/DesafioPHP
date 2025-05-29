@@ -3,11 +3,28 @@
     <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
       <h1 class="text-2xl font-bold text-gray-800">Chamados Técnicos</h1>
 
-      <Link href="/tecnico/usuarios">
-        <PrimaryButton>Controle de Usuários</PrimaryButton>
-      </Link>
+      <div class="flex gap-3 items-center">
+        <Link href="/tecnico/usuarios">
+          <PrimaryButton>Controle de Usuários</PrimaryButton>
+        </Link>
+
+        <PrimaryButton
+            class="bg-red-600 hover:bg-red-700"
+            @click="exportPdf"
+          >
+            📄 PDF
+          </PrimaryButton>
+
+          <PrimaryButton
+            class="bg-green-600 hover:bg-green-700"
+            @click="exportExcel"
+          >
+            📥 Excel
+          </PrimaryButton>
+      </div>
 
       <div class="flex gap-4">
+        <!-- Filtro Status -->
         <select
           v-model="filters.status"
           @change="applyFilters"
@@ -128,6 +145,23 @@ function applyFilters() {
     { preserveState: true }
   )
 }
+
+const exportPdf = () => {
+  const params = new URLSearchParams({
+    status: filters.value.status,
+    prioridade: filters.value.prioridade,
+  })
+  window.open(`/export/pdf?${params.toString()}`, '_blank');
+}
+
+const exportExcel = () => {
+  const params = new URLSearchParams({
+    status: filters.value.status,
+    prioridade: filters.value.prioridade,
+  })
+  window.open(`/export/excel?${params.toString()}`, '_blank');
+}
+
 
 function updateStatus(chamadoId, novoStatus) {
   loadingChamadoId.value = chamadoId
