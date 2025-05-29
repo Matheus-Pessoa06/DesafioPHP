@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Chamado;
 use App\Models\User;
+use App\Models\Categoria;
 use Illuminate\Database\Seeder;
 
 class ChamadoSeeder extends Seeder
@@ -51,11 +52,13 @@ class ChamadoSeeder extends Seeder
         ];
 
         foreach ($chamados as $dados) {
+            $categoria = Categoria::where('nome', $dados['categoria'])->first();
+
             Chamado::updateOrCreate(
                 ['titulo' => $dados['titulo']],
                 [
                     'descricao' => $dados['descricao'],
-                    'categoria' => $dados['categoria'],
+                    'categoria_id' => $categoria->id ?? null,
                     'prioridade' => $dados['prioridade'],
                     'status' => 'Aberto',
                     'responsavel' => $dados['responsavel'],
