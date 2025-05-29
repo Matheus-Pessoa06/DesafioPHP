@@ -21,19 +21,16 @@ class ExportController extends Controller
     public function exportPdf(Request $request)
     {
         $chamados = DB::table('chamados')
-            ->leftJoin('users', function($join) {
-                $join->on('chamados.responsavel', '=', 'users.name');
-            })
-            ->leftJoin('categorias', 'chamados.categoria_id', '=', 'categorias.id')
+            ->leftJoin('users', 'chamados.user_id', '=', 'users.id')
             ->select(
                 'chamados.*',
-                'users.name as responsavel_nome',
-                'categorias.nome as categoria_nome'
+                'users.name as responsavel_nome'
             )
-            ->when($request->categoria, fn($q) => $q->where('chamados.categoria_id', $request->categoria))
+            ->when($request->categoria, fn($q) => $q->where('chamados.categoria', $request->categoria))
             ->when($request->prioridade, fn($q) => $q->where('chamados.prioridade', $request->prioridade))
             ->when($request->status, fn($q) => $q->where('chamados.status', $request->status))
             ->get();
+
 
 
         $pdf = Pdf::loadView('pdf.chamados', compact('chamados'));

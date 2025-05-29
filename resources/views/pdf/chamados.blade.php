@@ -30,9 +30,9 @@
                 <tr>
                     <td>{{ $chamado->titulo }}</td>
                     <td>{{ $chamado->descricao }}</td>
-                    <td>{{ $chamado->responsavel->name ?? 'Não atribuído' }}</td>
+                    <td>{{ $chamado->responsavel_nome ?? 'Não atribuído' }}</td>
                     <td>{{ $chamado->prioridade }}</td>
-                    <td>{{ $chamado->categoria->nome ?? '' }}</td>
+                    <td>{{ $chamado->categoria ?? '' }}</td>
                     <td>{{ $chamado->status }}</td>
                     <td>{{ \Carbon\Carbon::parse($chamado->created_at)->format('d/m/Y H:i') }}</td>
                     <td>{{ \Carbon\Carbon::parse($chamado->updated_at)->format('d/m/Y H:i') }}</td>
