@@ -2,10 +2,11 @@
 
 namespace App\Exports;
 
-use App\Models\Chamado;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Illuminate\Http\Request;
 
 class ChamadosExport implements FromCollection, WithHeadings, WithMapping
 {
@@ -18,16 +19,28 @@ class ChamadosExport implements FromCollection, WithHeadings, WithMapping
 
     public function collection()
     {
-        $query = Chamado::with(['responsavel', 'categoria']);
+        $query = DB::table('chamados')
+            ->leftJoin('users', 'chamados.user_id', '=', 'users.id')
+            ->leftJoin('categorias', 'chamados.categoria_id', '=', 'categorias.id')
+            ->select(
+                'chamados.titulo',
+                'chamados.descricao',
+                'users.name as responsavel_nome',
+                'chamados.prioridade',
+                'categorias.nome as categoria_nome',
+                'chamados.status',
+                'chamados.created_at',
+                'chamados.updated_at'
+            );
 
         if (!empty($this->filters['categoria'])) {
-            $query->where('categoria_id', $this->filters['categoria']);
+            $query->where('chamados.categoria_id', $this->filters['categoria']);
         }
         if (!empty($this->filters['prioridade'])) {
-            $query->where('prioridade', $this->filters['prioridade']);
+            $query->where('chamados.prioridade', $this->filters['prioridade']);
         }
         if (!empty($this->filters['status'])) {
-            $query->where('status', $this->filters['status']);
+            $query->where('chamados.status', $this->filters['status']);
         }
 
         return $query->get();
@@ -38,12 +51,12 @@ class ChamadosExport implements FromCollection, WithHeadings, WithMapping
         return [
             $chamado->titulo,
             $chamado->descricao,
-            $chamado->responsavel->name ?? 'Não atribuído',
+            $chamado->responsavel_nome ?? 'Não atribuído',
             $chamado->prioridade,
-            $chamado->categoria->nome ?? '',
+            $chamado->categoria_nome ?? '',
             $chamado->status,
-            $chamado->created_at->format('d/m/Y H:i'),
-            $chamado->updated_at->format('d/m/Y H:i'),
+            date('d/m/Y H:i', strtotime($chamado->created_at)),
+            date('d/m/Y H:i', strtotime($chamado->updated_at)),
         ];
     }
 

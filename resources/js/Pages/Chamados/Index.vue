@@ -16,13 +16,20 @@
           </PrimaryButton>
         </Link>
 
-         <button
-            @click="exportPdf"
-            class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-            >
-            PDF
-          </button>
-        </div>
+        <PrimaryButton
+          class="bg-red-600 hover:bg-red-700"
+          @click="exportPdf"
+        >
+          📄 PDF
+        </PrimaryButton>
+
+        <PrimaryButton
+          class="bg-green-600 hover:bg-green-700"
+          @click="exportExcel"
+        >
+          📥 Excel
+        </PrimaryButton>
+      </div>
 
       <div class="flex gap-4">
         <select
@@ -124,7 +131,19 @@ function applyFilters() {
 }
 
 const exportPdf = () => {
-  window.open('/export/pdf', '_blank');
+  const params = new URLSearchParams({
+    status: filters.value.status,
+    prioridade: filters.value.prioridade,
+  })
+  window.open(`/export/pdf?${params.toString()}`, '_blank');
+}
+
+const exportExcel = () => {
+  const params = new URLSearchParams({
+    status: filters.value.status,
+    prioridade: filters.value.prioridade,
+  })
+  window.open(`/export/excel?${params.toString()}`, '_blank');
 }
 
 onMounted(() => {

@@ -4,10 +4,51 @@
     <meta charset="utf-8">
     <title>Relatório de Chamados</title>
     <style>
-        body { font-family: sans-serif; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #000; padding: 5px; text-align: left; }
-        th { background-color: #eee; }
+        /* Estilos gerais para tela */
+        body {
+            font-family: sans-serif;
+            margin: 20px; /* Margem padrão para visualização em tela */
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto; /* Centraliza a tabela na tela */
+            table-layout: fixed; /* Ajuda a controlar a largura das colunas */
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px; /* Aumentei um pouco o padding para melhor legibilidade */
+            text-align: left;
+            word-wrap: break-word; /* Garante que o texto longo quebre a linha */
+        }
+        th {
+            background-color: #eee;
+            font-weight: bold;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos específicos para impressão (PDF) */
+        @media print {
+            body {
+                margin: 1cm; /* Margens para impressão para evitar corte */
+                padding: 0;
+                font-size: 10pt; /* Tamanho de fonte menor para impressão */
+            }
+            table {
+                width: 100%; /* Garante que a tabela ocupe a largura total da área imprimível */
+                margin: 0 auto; /* Centraliza novamente para impressão */
+            }
+            th, td {
+                padding: 5px; /* Reduzi o padding para caber mais conteúdo */
+                font-size: 9pt; /* Ajuste fino do tamanho da fonte para células */
+            }
+            /* Opcional: Quebra de página antes de cada tabela se houver múltiplas */
+            /* table { page-break-after: always; } */
+        }
     </style>
 </head>
 <body>
