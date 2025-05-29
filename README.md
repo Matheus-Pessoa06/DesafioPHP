@@ -118,9 +118,3 @@ tecnico@mail.com | tecnico#engeselt | Técnico
 
 * Role Colaborador: Pode criar novos chamados, acompanhar os chamados existentes e filtrar os chamados;
 * Role Técnico: Pode visualizar todos os chamados, acompanhar os chamados existentes e filtrar os chamados;
-
-### 5. Agora é com Você! 🚀
-
-As atividades a serem executadas neste projeto estão detalhadas no arquivo enviado por e-mail.
-
-Boa sorte, **#VaiDarCerto!**
