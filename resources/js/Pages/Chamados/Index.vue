@@ -15,7 +15,14 @@
             Nova Categoria
           </PrimaryButton>
         </Link>
-      </div>
+
+         <button
+            @click="exportPdf"
+            class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+            >
+            PDF
+          </button>
+        </div>
 
       <div class="flex gap-4">
         <select
@@ -114,6 +121,10 @@ function applyFilters() {
     },
     { preserveState: true }
   )
+}
+
+const exportPdf = () => {
+  window.open('/export/pdf', '_blank');
 }
 
 onMounted(() => {

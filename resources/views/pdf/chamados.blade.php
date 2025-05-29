@@ -34,8 +34,8 @@
                     <td>{{ $chamado->prioridade }}</td>
                     <td>{{ $chamado->categoria->nome ?? '' }}</td>
                     <td>{{ $chamado->status }}</td>
-                    <td>{{ $chamado->created_at->format('d/m/Y H:i') }}</td>
-                    <td>{{ $chamado->updated_at->format('d/m/Y H:i') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($chamado->created_at)->format('d/m/Y H:i') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($chamado->updated_at)->format('d/m/Y H:i') }}</td>
                 </tr>
             @endforeach
         </tbody>
