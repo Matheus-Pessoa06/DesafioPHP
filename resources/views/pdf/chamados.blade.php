@@ -30,7 +30,7 @@
                 <tr>
                     <td>{{ $chamado->titulo }}</td>
                     <td>{{ $chamado->descricao }}</td>
-                    <td>{{ $chamado->responsavel_nome ?? 'Não atribuído' }}</td>
+                    <td>{{ $chamado->responsavel ?? 'Não atribuído' }}</td>
                     <td>{{ $chamado->prioridade }}</td>
                     <td>{{ $chamado->categoria ?? '' }}</td>
                     <td>{{ $chamado->status }}</td>
