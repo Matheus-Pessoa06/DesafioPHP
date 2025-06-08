@@ -16,7 +16,7 @@ Este projeto utiliza o framework Laravel. Abaixo estão os passos completos para
 ### 1. Clone o repositório 😎
 
 ```
-git clone https://github.com/Matheus-Pessoa06/DesafioPHP
+git clone https://github.com/Matheus-Pessoa06/Sistema-de-Controle-de-chamados
 ```
 
 ### 2. Copie o arquivo .env 📂
